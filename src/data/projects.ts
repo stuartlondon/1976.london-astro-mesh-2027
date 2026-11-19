@@ -1,6 +1,7 @@
 export type ProjectStatus = "Live" | "In Development";
 
 export interface Project {
+    slug: string;
     name: string;
     category: string;
     description: string;
@@ -10,10 +11,17 @@ export interface Project {
     website?: string;
     image?: string;
     tone: "cyan" | "teal" | "slate";
+    caseStudy: {
+        headline: string;
+        highlight: string;
+        focus: string;
+        priorities: string[];
+    };
 }
 
 export const projects: Project[] = [
     {
+        slug: "fix-my-car",
         name: "Fix My Car",
         category: "Mobile Mechanic Website",
         description:
@@ -23,9 +31,21 @@ export const projects: Project[] = [
         featured: true,
         website: "https://fixmycar.london",
         image: "/fixmycar.png",
-        tone: "cyan"
+        tone: "cyan",
+        caseStudy: {
+            headline: "A clearer route to",
+            highlight: "local car care.",
+            focus:
+                "A mobile mechanic website for drivers across North, East and South London.",
+            priorities: [
+                "Make services easy to understand",
+                "Clarify where the service is available",
+                "Keep direct contact easy to find",
+            ],
+        },
     },
     {
+        slug: "dragica-carlin",
         name: "Dragica Carlin",
         category: "Artist Portfolio",
         description:
@@ -35,9 +55,21 @@ export const projects: Project[] = [
         featured: true,
         website: "https://dragicacarlin.com",
         image: "/dragicacarlin.png",
-        tone: "cyan"
+        tone: "cyan",
+        caseStudy: {
+            headline: "An artist portfolio",
+            highlight: "with room for the work.",
+            focus:
+                "A personal home for artwork, exhibitions, commissions, and visual storytelling.",
+            priorities: [
+                "Put the artwork at the centre",
+                "Give exhibitions a clear place",
+                "Make commission enquiries straightforward",
+            ],
+        },
     },
     {
+        slug: "ben-stockley",
         name: "Ben Stockley",
         category: "Filmmaker Portfolio",
         description:
@@ -47,9 +79,21 @@ export const projects: Project[] = [
         featured: true,
         website: "https://benstockley.com",
         image: "/benstockley.png",
-        tone: "teal"
+        tone: "teal",
+        caseStudy: {
+            headline: "A cinematic home",
+            highlight: "for motion-led work.",
+            focus:
+                "A filmmaker portfolio designed around motion work and client projects.",
+            priorities: [
+                "Let motion work take the lead",
+                "Make client projects easy to explore",
+                "Keep the experience focused on the films",
+            ],
+        },
     },
     {
+        slug: "reds-plastering",
         name: "Reds Plastering",
         category: "Small Business Website",
         description:
@@ -59,6 +103,17 @@ export const projects: Project[] = [
         featured: true,
         website: "https://redsplastering.co.uk",
         image: "/redsplastering.png",
-        tone: "slate"
+        tone: "slate",
+        caseStudy: {
+            headline: "A straightforward website",
+            highlight: "for a local trade.",
+            focus:
+                "A practical lead-focused website for a local plastering business.",
+            priorities: [
+                "Explain the service clearly",
+                "Build confidence with a practical presentation",
+                "Make the next step easy for potential customers",
+            ],
+        },
     },
 ];

@@ -1,7 +1,5 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-
-const sent = Astro.url.searchParams.get("sent") === "1";
 ---
 
 <MainLayout
@@ -10,8 +8,11 @@ const sent = Astro.url.searchParams.get("sent") === "1";
     currentPath="/contact"
 >
     <section class="hero">
-        <span class="eyebrow">Contact</span>
-        <h1>Tell me about your project and I will reply within 24 hours.</h1>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Contact</span>
+        <h1>
+            Tell me about your project and I will reply{" "}
+            <span>within 24 hours.</span>
+        </h1>
         <p>
             Whether you need a new portfolio, a small business website, or a
             complete rebuild, this is the fastest way to start the conversation.
@@ -20,16 +21,13 @@ const sent = Astro.url.searchParams.get("sent") === "1";
 
     <section class="contact-layout">
         <div class="contact-panel">
-            <h2>Project Enquiry Form</h2>
-            {
-                sent && (
-                    <p class="form-alert" role="status">
-                        Thanks, your enquiry has been sent successfully. I will
-                        reply as soon as I can.
-                    </p>
-                )
-            }
+            <h2 id="contact-form-title">Project Enquiry Form</h2>
+            <p id="contact-success" class="form-alert" role="status" hidden>
+                Your message has been sent successfully. I’ll get back to you
+                within 24 hours.
+            </p>
             <form
+                id="contact-form"
                 class="contact-form"
                 method="post"
                 action="https://formsubmit.co/stuart@1976.london"
@@ -43,7 +41,7 @@ const sent = Astro.url.searchParams.get("sent") === "1";
                 <input
                     type="hidden"
                     name="_next"
-                    value="https://1976.london/contact?sent=1"
+                    value="https://1976.london/contact/?sent=1"
                 />
                 <input
                     type="text"
@@ -133,4 +131,24 @@ const sent = Astro.url.searchParams.get("sent") === "1";
             <p>3. We confirm scope and launch plan.</p>
         </aside>
     </section>
+
+    <script>
+        if (new URLSearchParams(window.location.search).get("sent") === "1") {
+            const title = document.getElementById("contact-form-title");
+            const status = document.getElementById("contact-success");
+            const form = document.getElementById("contact-form");
+
+            if (
+                !(title instanceof HTMLHeadingElement) ||
+                !(status instanceof HTMLParagraphElement) ||
+                !(form instanceof HTMLFormElement)
+            ) {
+                throw new Error("Contact form success elements are missing.");
+            }
+
+            title.textContent = "Thanks for getting in touch";
+            status.hidden = false;
+            form.hidden = true;
+        }
+    </script>
 </MainLayout>

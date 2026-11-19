@@ -1,139 +1,80 @@
-# 1976 London Astro Portfolio
+# 1976 London
 
-Modern Astro portfolio website for 1976 London, the freelance web development and creative technology studio run by Stuart Hunt.
+Independent London web development studio, built as a fast, responsive Astro site.
 
-This is a fresh Astro rebuild focused on:
+<p align="center">
+  <a href="https://1976.london"><strong>Visit the live site</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/stuartlondon/1976london-astro">View the source</a>
+</p>
 
-- Showcasing real client work
-- Generating project enquiries
-- Presenting a personal, trustworthy studio identity
-- Keeping the codebase clean and easy to extend
+<p align="center">
+  <a href="https://1976.london">
+    <img src="./screenshots/site-preview.jpg" alt="1976 London homepage on desktop" width="100%">
+  </a>
+</p>
 
-## Stack
+## What’s here
 
-- Astro 7
-- TypeScript (strict Astro config)
-- Component-based architecture
-- Data-driven portfolio content
+- **Home** — a clear introduction, studio approach, featured projects, and contact calls to action
+- **Work** — a portfolio overview and individual case studies
+- **Services** — Astro, WordPress, portfolio, small-business, and maintenance services
+- **About** — background and a straightforward project process
+- **Contact** — project enquiry form, direct contact details, and an on-site sent confirmation
 
-## Site Pages
+The visual system pairs deep navy with a bright lime accent. Motion is kept subtle, the hero mesh responds to fine-pointer movement, and reduced-motion preferences are respected.
 
-- Home: Hero, studio introduction, featured projects, and calls to action
-- Work: Full portfolio listing from shared project data
-- Services: Outcome-focused service cards
-- Contact: Enquiry form and direct contact details
+## Built with
 
-## Design Direction
+- Astro 7, generating static HTML
+- TypeScript for page and project data
+- CSS with responsive layouts and reduced-motion support
+- FormSubmit for enquiry delivery
 
-- Dark navy background
-- High-contrast white type
-- Cyan and teal accents
-- Large spacing and premium modern presentation
-- Mobile-first and accessibility-conscious UI
+## Run locally
 
-## Project Structure
+Requirements: Node.js `>=22.12.0`.
 
-```text
-/
-├── public/
-│   ├── benstockley.png
-│   ├── davidaustenstudio.png
-│   ├── dragicacarlin.png
-│   ├── fixmycar.png
-│   └── redsplastering.png
-├── src/
-│   ├── components/
-│   │   ├── ProjectCard.astro
-│   │   ├── ServiceCard.astro
-│   │   ├── SiteFooter.astro
-│   │   └── SiteHeader.astro
-│   ├── data/
-│   │   └── projects.ts
-│   ├── layouts/
-│   │   └── MainLayout.astro
-│   ├── pages/
-│   │   ├── contact.astro
-│   │   ├── index.astro
-│   │   ├── services.astro
-│   │   └── work.astro
-│   └── styles/
-│       └── global.css
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
-
-## Local Development
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start dev server:
-
-```bash
+```sh
+npm ci
 npm run dev
 ```
 
-Build production files:
+Create and preview a production build:
 
-```bash
+```sh
 npm run build
-```
-
-Preview production build locally:
-
-```bash
 npm run preview
 ```
 
-## Content Updates
+The finished static site is written to `dist/`.
 
-Project cards are controlled in one place:
+## Deploy
 
-- Update project details in `src/data/projects.ts`
+For cPanel hosting, zip the **contents** of `dist/`, not the `dist` folder itself:
 
-Each project supports:
+```sh
+(cd dist && zip -r -FS ../1976-london-site.zip .)
+```
 
-- Name, category, description
-- Technology tags
-- Status badge (`Live` or `In Development`)
-- Optional website URL
-- Optional screenshot image path
+Upload `1976-london-site.zip` to `public_html` and extract it there. The archive contains the generated `robots.txt` and sitemap as well as the site pages and assets; check those files are the versions you intend to publish before replacing existing copies.
 
-## Contact Form Notes
+## Contact form
 
-The contact form is configured to send submissions via FormSubmit to:
+Enquiries are sent through FormSubmit to `stuart@1976.london`. FormSubmit requires an initial activation confirmation. After a successful submission, it redirects back to `/contact/?sent=1` and the site displays an inline confirmation.
 
-- `stuart@1976.london`
+## Updating portfolio content
 
-On first use, FormSubmit requires one activation confirmation email.
+Project details, case-study content, links, and images are maintained in [`src/data/projects.ts`](./src/data/projects.ts). Place project images in `public/` and reference them from that data file.
 
-## Deployment (Namecheap cPanel)
+## Repository structure
 
-1. Run `npm run build`
-2. Zip the contents of `dist/` (not the `dist` folder itself)
-3. Upload to `public_html` via cPanel File Manager
-4. Ensure `.htaccess` settings (if used) do not interfere with static files
-
-## Launch Checklist
-
-1. Confirm project links and contact email are correct on Home, Work, Services, and Contact pages.
-2. Run `npm run build` and verify no errors.
-3. Open `dist/` locally and spot-check page navigation and project images.
-4. Zip the contents of `dist/` (select all files inside `dist`, then compress).
-5. Upload the zip to `public_html` in cPanel and extract there.
-6. Remove old website files from `public_html` if needed to avoid conflicts.
-7. Visit the live domain and hard refresh to clear browser cache.
-8. Submit a test enquiry from `/contact` and confirm email delivery to `stuart@1976.london`.
-9. Optional: delete the uploaded zip after extraction for a cleaner server folder.
-
-## Future Enhancements
-
-- Add mobile-specific project screenshots
-- Add dedicated case study pages for each project
-- Integrate analytics and enquiry conversion tracking
-- Add form backend endpoint (optional) for more control
-
+```text
+public/                 Project images and site icons
+screenshots/            README preview image
+src/components/         Shared Astro components
+src/data/projects.ts    Portfolio and case-study content
+src/layouts/            Shared page layout
+src/pages/              Home, About, Services, Contact, and Work routes
+src/styles/global.css   Site-wide design and responsive styles
+```

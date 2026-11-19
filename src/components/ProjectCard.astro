@@ -17,6 +17,22 @@ const hasImage = Boolean(project.image);
 ---
 
 <article class="project-card">
+    <div
+        class={`project-shot ${project.tone} ${hasImage ? "has-image" : ""}`}
+    >
+        {
+            hasImage ? (
+                <img
+                    src={project.image}
+                    alt={`Homepage screenshot for ${project.name}`}
+                    loading="lazy"
+                    decoding="async"
+                />
+            ) : (
+                <span>{initials}</span>
+            )
+        }
+    </div>
     <div class="project-copy">
         <div class="project-heading">
             <h3>{project.name}</h3>
@@ -39,32 +55,44 @@ const hasImage = Boolean(project.image);
         }
 
         {
-            project.website && (
-                <p>
-                    <a href={project.website} target="_blank" rel="noreferrer">
-                        Visit website
+            <div class="project-links">
+                <a class="text-link" href={`/work/${project.slug}`}>
+                    Explore project <span aria-hidden="true">↗</span>
+                </a>
+                {project.website && (
+                    <a
+                        class="text-link project-external-link"
+                        href={project.website}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Visit live site <span aria-hidden="true">↗</span>
                     </a>
-                </p>
-            )
-        }
-    </div>
-
-    <div
-        class={`project-shot ${project.tone} ${hasImage ? "has-image" : ""}`}
-        role="img"
-        aria-label={`${project.name} project screenshot`}
-    >
-        {
-            hasImage ? (
-                <img
-                    src={project.image}
-                    alt={`Homepage screenshot for ${project.name}`}
-                    loading="lazy"
-                    decoding="async"
-                />
-            ) : (
-                <span>{initials}</span>
-            )
+                )}
+            </div>
         }
     </div>
 </article>
+
+<script>
+    const cards = document.querySelectorAll<HTMLElement>(".project-card");
+    const supportsScrollHighlight = window.matchMedia(
+        "(max-width: 47.99rem) and (prefers-reduced-motion: no-preference)",
+    );
+
+    if ("IntersectionObserver" in window && supportsScrollHighlight.matches) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    entry.target.classList.toggle(
+                        "is-in-view",
+                        entry.isIntersecting,
+                    );
+                });
+            },
+            { rootMargin: "-10% 0px -10% 0px", threshold: 0.18 },
+        );
+
+        cards.forEach((card) => observer.observe(card));
+    }
+</script>

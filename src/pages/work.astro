@@ -9,9 +9,12 @@ import { projects } from "../data/projects";
     description="Client websites and creative technology projects by Stuart Hunt at 1976 London."
     currentPath="/work"
 >
-    <section class="hero">
-        <span class="eyebrow">Work</span>
-        <h1>Portfolio projects built for creative and local businesses.</h1>
+    <section class="hero work-hero">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Work</span>
+        <h1>
+            Portfolio projects built for{" "}
+            <span>creative and local businesses.</span>
+        </h1>
         <p>
             Each build is tailored to goals, audience, and tone, with a focus on
             performance, clarity, and maintainability.
@@ -27,7 +30,7 @@ import { projects } from "../data/projects";
                 development.
             </p>
         </div>
-        <div class="projects-grid">
+        <div class="projects-grid work-projects-grid">
             {projects.map((project) => <ProjectCard project={project} />)}
         </div>
     </section>

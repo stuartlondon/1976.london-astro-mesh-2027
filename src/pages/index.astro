@@ -7,81 +7,268 @@ const featuredProjects = projects.filter((project) => project.featured);
 ---
 
 <MainLayout
-	title="1976 London | Freelance Web Development Studio"
-	description="1976 London is a freelance web development and creative technology studio run by Stuart Hunt in London."
-	currentPath="/"
->
-	<section class="hero">
-		<span class="eyebrow">Freelance Web Development Studio</span>
-		<h1>
-			Modern websites that showcase your work and bring in better
-			enquiries.
-		</h1>
-		<p>
-			1976 London is a freelance web development and creative technology
-			studio run by Stuart Hunt in London.
-		</p>
-		<p>
-			I enjoy working with artists, photographers, filmmakers, musicians,
-			charities and local businesses. Every project begins with
-			understanding the people behind the project.
-		</p>
-		<div class="button-row">
-			<a class="button button-primary" href="/work">View Work</a>
-			<a class="button button-secondary" href="/contact"
-				>Start a Project</a
-			>
-		</div>
-	</section>
+  title="1976 London | Freelance Web Development Studio"
+  description="1976 London is a freelance web development and creative technology studio run by Stuart Hunt in London."
+  currentPath="/">
+  <section class="hero home-hero" data-spotlight>
+    <canvas class="hero-mesh" data-hero-mesh aria-hidden="true"></canvas>
+    <div class="hero-spotlight" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="eyebrow-dot"></span> Independent web studio · London</span>
+      <h1>
+        Good work deserves a <span>great website.</span>
+      </h1>
+      <p class="hero-intro">
+        I’m Stuart, a freelance web developer making thoughtful, hard-working
+        websites for creative people and small businesses.
+      </p>
+      <div class="button-row hero-actions">
+        <a class="button button-primary" href="/work">Explore the work <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href="/contact">Tell me what you need</a>
+      </div>
+    </div>
+    <div class="hero-note">
+      <span class="hero-note-line"></span>
+      <span>Independent by design.<br />Collaborative by nature.</span>
+      <span class="hero-note-index">001 — 1976/L</span>
+    </div>
+  </section>
 
-	<section class="split" aria-label="Studio introduction">
-		<article class="panel">
-			<h2>Personal, practical, and collaborative.</h2>
-			<p>
-				I build lean, high-performing websites using modern Astro
-				patterns, reusable components, and accessible frontend
-				practices.
-			</p>
-		</article>
-		<article class="panel">
-			<h2>Made to grow with your business.</h2>
-			<p>
-				Each site is structured so new pages, projects, and content can
-				be added quickly without rebuilding from scratch.
-			</p>
-		</article>
-	</section>
+  <section class="intro-band" aria-label="Studio introduction">
+    <p class="intro-kicker">Small studio. Thoughtful work.</p>
+    <div class="intro-copy">
+      <h2>Personal, practical, and built around <span>your next chapter.</span></h2>
+      <p>
+        From the first conversation to the final details, every decision has a
+        reason: clearer stories, better experiences, and a site that can grow
+        with you.
+      </p>
+      <a class="text-link" href="/about">A little about the studio <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 
-	<section>
-		<div class="section-head">
-			<span class="eyebrow">Featured Projects</span>
-			<h2>Selected client work from 1976 London.</h2>
-			<p>
-				Real websites, real outcomes, and a process that keeps
-				communication clear.
-			</p>
-		</div>
-		<div class="projects-grid">
-			{
-				featuredProjects.map((project) => (
-					<ProjectCard project={project} />
-				))
-			}
-		</div>
-	</section>
+  <section class="home-work">
+    <div class="section-head section-head-row">
+      <div>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Selected work</span>
+        <h2>Different people.<br /><span>Distinctly theirs.</span></h2>
+      </div>
+      <p>
+        A few recent collaborations, each shaped around the people and purpose
+        behind the project.
+      </p>
+    </div>
+    <div class="projects-grid home-projects-grid">
+      {featuredProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+    <a class="text-link section-link" href="/work">See all projects <span aria-hidden="true">↗</span></a>
+  </section>
 
-	<section class="cta">
-		<h2>Need a portfolio, service website, or full rebuild?</h2>
-		<p>
-			Let us map the right approach together and build something that
-			feels true to your work.
-		</p>
-		<div class="button-row">
-			<a class="button button-primary" href="/services"
-				>Explore Services</a
-			>
-			<a class="button button-secondary" href="/contact">Contact Stuart</a
-			>
-		</div>
-	</section>
+  <section class="cta home-cta">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> Have something in mind?</span>
+    <h2>Let’s make your next website feel like <span>you.</span></h2>
+    <p>
+      No hard sell, no one-size-fits-all. Just a good conversation about what
+      you need and the best way to get there.
+    </p>
+    <div class="button-row">
+      <a class="button button-primary" href="/contact">Start a conversation <span aria-hidden="true">↗</span></a>
+      <a class="button button-secondary" href="/services">Explore services</a>
+    </div>
+  </section>
 </MainLayout>
+
+<script>
+  const hero = document.querySelector<HTMLElement>("[data-spotlight]");
+  const meshCanvas = hero?.querySelector<HTMLCanvasElement>("[data-hero-mesh]");
+  const meshContext = meshCanvas?.getContext("2d");
+  const supportsPointerGlow = window.matchMedia(
+    "(pointer: fine) and (prefers-reduced-motion: no-preference)",
+  );
+
+  if (hero) {
+    let frame = 0;
+    let width = 0;
+    let height = 0;
+    let pixelRatio = 1;
+    let pointerX = 0;
+    let pointerY = 0;
+    let meshIntensity = 0;
+    let targetMeshIntensity = 0;
+    const meshBuffer = document.createElement("canvas");
+    const meshBufferContext = meshBuffer.getContext("2d");
+
+    function distortPoint(x: number, y: number, intensity: number) {
+      const dx = x - pointerX;
+      const dy = y - pointerY;
+      const distance = Math.hypot(dx, dy);
+      const falloff = Math.exp(-distance / 150);
+      const ripple = Math.sin(distance * 0.035) * falloff * 12 * intensity;
+      const direction = distance > 0 ? 1 / distance : 0;
+
+      return {
+        x:
+          x +
+          Math.sin(x * 0.008 + y * 0.012) * 1.2 +
+          Math.cos(y * 0.019) * 0.6 +
+          dx * direction * ripple,
+        y:
+          y +
+          Math.cos(x * 0.01 - y * 0.007) * 1.1 +
+          Math.sin(x * 0.017) * 0.5 +
+          dy * direction * ripple,
+      };
+    }
+
+    function drawGrid(context: CanvasRenderingContext2D, intensity: number) {
+      const spacing = 32;
+      const sampleStep = 24;
+      context.strokeStyle = "rgba(102, 217, 238, 0.4)";
+      context.lineWidth = 1.6;
+
+      for (let x = 0; x <= width; x += spacing) {
+        context.beginPath();
+        for (let y = 0; y < height; y += sampleStep) {
+          const point = distortPoint(x, y, intensity);
+          if (y === 0) context.moveTo(point.x, point.y);
+          else context.lineTo(point.x, point.y);
+        }
+        const end = distortPoint(x, height, intensity);
+        context.lineTo(end.x, end.y);
+        context.stroke();
+      }
+
+      for (let y = 0; y <= height; y += spacing) {
+        context.beginPath();
+        for (let x = 0; x < width; x += sampleStep) {
+          const point = distortPoint(x, y, intensity);
+          if (x === 0) context.moveTo(point.x, point.y);
+          else context.lineTo(point.x, point.y);
+        }
+        const end = distortPoint(width, y, intensity);
+        context.lineTo(end.x, end.y);
+        context.stroke();
+      }
+    }
+
+    function drawMesh() {
+      if (!meshCanvas || !meshContext || !meshBufferContext) return;
+
+      meshContext.clearRect(0, 0, width, height);
+      meshContext.globalAlpha = 0.07;
+      drawGrid(meshContext, 0);
+      meshContext.globalAlpha = 1;
+
+      if (meshIntensity > 0.005) {
+        meshBufferContext.clearRect(0, 0, width, height);
+        meshBufferContext.globalAlpha = 0.6;
+        drawGrid(meshBufferContext, meshIntensity);
+        meshBufferContext.globalAlpha = 1;
+        meshBufferContext.globalCompositeOperation = "destination-in";
+
+        const radius = Math.min(240, Math.max(120, Math.min(width, height) * 0.45));
+        const mask = meshBufferContext.createRadialGradient(
+          pointerX,
+          pointerY,
+          0,
+          pointerX,
+          pointerY,
+          radius,
+        );
+        mask.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+        mask.addColorStop(0.55, "rgba(255, 255, 255, 0.55)");
+        mask.addColorStop(1, "rgba(255, 255, 255, 0)");
+        meshBufferContext.fillStyle = mask;
+        meshBufferContext.fillRect(0, 0, width, height);
+        meshBufferContext.globalCompositeOperation = "source-over";
+
+        meshContext.globalAlpha = meshIntensity * 0.72;
+        meshContext.drawImage(meshBuffer, 0, 0, width, height);
+        meshContext.globalAlpha = 1;
+      }
+    }
+
+    function renderMesh() {
+      frame = 0;
+      meshIntensity += (targetMeshIntensity - meshIntensity) * 0.22;
+      drawMesh();
+
+      if (Math.abs(targetMeshIntensity - meshIntensity) > 0.01) {
+        frame = requestAnimationFrame(renderMesh);
+      }
+    }
+
+    function queueMeshRender() {
+      if (!frame) frame = requestAnimationFrame(renderMesh);
+    }
+
+    function resizeMesh() {
+      if (!meshCanvas || !meshContext || !meshBufferContext) return;
+
+      const bounds = hero.getBoundingClientRect();
+      width = bounds.width;
+      height = bounds.height;
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      meshCanvas.width = Math.round(width * pixelRatio);
+      meshCanvas.height = Math.round(height * pixelRatio);
+      meshBuffer.width = meshCanvas.width;
+      meshBuffer.height = meshCanvas.height;
+      meshContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      meshBufferContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      drawMesh();
+    }
+
+    resizeMesh();
+    window.addEventListener("resize", resizeMesh);
+
+    if (supportsPointerGlow.matches) {
+      hero.addEventListener("pointermove", (event) => {
+        const bounds = hero.getBoundingClientRect();
+        pointerX = event.clientX - bounds.left;
+        pointerY = event.clientY - bounds.top;
+        const edgeDistance = Math.max(
+          0,
+          Math.min(
+            pointerX,
+            pointerY,
+            bounds.width - pointerX,
+            bounds.height - pointerY,
+          ),
+        );
+        const spotlightRadius = Math.max(1, Math.min(460, edgeDistance / 0.7));
+
+        hero.classList.add("is-pointer-active");
+        hero.style.setProperty("--pointer-x", `${pointerX}px`);
+        hero.style.setProperty("--pointer-y", `${pointerY}px`);
+        hero.style.setProperty("--spotlight-radius", `${spotlightRadius}px`);
+        targetMeshIntensity = 1;
+        queueMeshRender();
+      });
+
+      hero.addEventListener("pointerleave", () => {
+        hero.classList.remove("is-pointer-active");
+        targetMeshIntensity = 0;
+        queueMeshRender();
+      });
+    }
+  }
+</script>
+
+<style>
+  .home-hero {
+    max-width: none;
+    padding-top: 2rem;
+  }
+
+  @media (min-width: 48rem) {
+    .home-hero {
+      padding-top: 3rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-note {
+      display: none;
+    }
+  }
+</style>

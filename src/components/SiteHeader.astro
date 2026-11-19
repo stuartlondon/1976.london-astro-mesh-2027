@@ -9,6 +9,7 @@ const navLinks = [
     { href: "/", label: "Home" },
     { href: "/work", label: "Work" },
     { href: "/services", label: "Services" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
 ];
 
@@ -18,12 +19,12 @@ const isActive = (href: string) => currentPath === href;
 <header class="site-header">
     <div class="shell header-inner">
         <a class="brand" href="/" aria-label="1976 London home page">
-            <span class="brand-top">1976</span>
-            <span class="brand-bottom">London</span>
+            <span class="brand-mark" aria-hidden="true">76</span>
+            <span class="brand-wordmark">1976<span>London</span></span>
         </a>
 
         <details class="mobile-nav">
-            <summary aria-label="Toggle navigation">Menu</summary>
+            <summary>Menu</summary>
             <nav aria-label="Mobile navigation">
                 <ul>
                     {

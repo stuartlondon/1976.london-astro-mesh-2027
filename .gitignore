@@ -1,5 +1,7 @@
 # build output
 dist/
+# Deployment archive
+/1976-london-site.zip
 # generated types
 .astro/
 
